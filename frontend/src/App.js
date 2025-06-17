@@ -19,35 +19,41 @@ function App() {
   // Mock speed test functionality
   useEffect(() => {
     let interval;
+    let step = 0;
+    const totalSteps = 100; // 10 seconds * 100ms intervals = 100 steps
+    const finalSpeed = Math.floor(Math.random() * 20) + 85; // Final speed between 85-105
     
     // Start test after a short delay
     const startTest = setTimeout(() => {
       setIsTestStarted(true);
       
-      // Simulate speed test progression
+      // Simulate speed test progression over exactly 10 seconds
       interval = setInterval(() => {
-        setCurrentSpeed(prevSpeed => {
-          const newSpeed = prevSpeed + Math.random() * 15 + 5;
+        step++;
+        
+        if (step >= totalSteps) {
+          // Test complete after 10 seconds
+          clearInterval(interval);
+          setIsTestComplete(true);
+          setCurrentSpeed(finalSpeed);
           
-          // Complete test when speed reaches a realistic value
-          if (newSpeed >= 85) {
-            clearInterval(interval);
-            setIsTestComplete(true);
-            
-            // Set final metrics
-            setAdditionalMetrics(prev => ({
-              ...prev,
-              uploadSpeed: Math.floor(Math.random() * 20) + 15,
-              latency: Math.floor(Math.random() * 30) + 10,
-              loadedLatency: Math.floor(Math.random() * 50) + 40
-            }));
-            
-            return Math.floor(Math.random() * 20) + 85; // Final speed between 85-105
-          }
+          // Set final metrics
+          setAdditionalMetrics(prev => ({
+            ...prev,
+            uploadSpeed: Math.floor(Math.random() * 20) + 15,
+            latency: Math.floor(Math.random() * 30) + 10,
+            loadedLatency: Math.floor(Math.random() * 50) + 40
+          }));
+        } else {
+          // Calculate speed progression with some randomness
+          const progress = step / totalSteps;
+          const baseSpeed = finalSpeed * progress;
+          const randomVariation = (Math.random() - 0.5) * 10; // ±5 Mbps variation
+          const currentSpeed = Math.max(0, baseSpeed + randomVariation);
           
-          return newSpeed;
-        });
-      }, 100);
+          setCurrentSpeed(currentSpeed);
+        }
+      }, 100); // Update every 100ms for smooth animation
     }, 1000);
 
     return () => {
