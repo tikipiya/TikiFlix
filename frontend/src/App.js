@@ -1,52 +1,75 @@
-import { useEffect } from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Import components from components.js
+import { SpeedTest, Header, Footer, AdditionalMetrics } from './components';
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+function App() {
+  const [isTestStarted, setIsTestStarted] = useState(false);
+  const [currentSpeed, setCurrentSpeed] = useState(0);
+  const [isTestComplete, setIsTestComplete] = useState(false);
+  const [additionalMetrics, setAdditionalMetrics] = useState({
+    uploadSpeed: 0,
+    latency: 0,
+    loadedLatency: 0,
+    location: 'San Francisco, CA',
+    isp: 'Your ISP'
+  });
 
+  // Mock speed test functionality
   useEffect(() => {
-    helloWorldApi();
+    let interval;
+    
+    // Start test after a short delay
+    const startTest = setTimeout(() => {
+      setIsTestStarted(true);
+      
+      // Simulate speed test progression
+      interval = setInterval(() => {
+        setCurrentSpeed(prevSpeed => {
+          const newSpeed = prevSpeed + Math.random() * 15 + 5;
+          
+          // Complete test when speed reaches a realistic value
+          if (newSpeed >= 85) {
+            clearInterval(interval);
+            setIsTestComplete(true);
+            
+            // Set final metrics
+            setAdditionalMetrics(prev => ({
+              ...prev,
+              uploadSpeed: Math.floor(Math.random() * 20) + 15,
+              latency: Math.floor(Math.random() * 30) + 10,
+              loadedLatency: Math.floor(Math.random() * 50) + 40
+            }));
+            
+            return Math.floor(Math.random() * 20) + 85; // Final speed between 85-105
+          }
+          
+          return newSpeed;
+        });
+      }, 100);
+    }, 1000);
+
+    return () => {
+      clearTimeout(startTest);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div className="app">
+      <Header />
+      <main className="main-content">
+        <SpeedTest 
+          speed={currentSpeed}
+          isTestStarted={isTestStarted}
+          isTestComplete={isTestComplete}
+        />
+        {isTestComplete && (
+          <AdditionalMetrics metrics={additionalMetrics} />
+        )}
+      </main>
+      <Footer />
     </div>
   );
 }
