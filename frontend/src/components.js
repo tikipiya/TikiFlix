@@ -53,14 +53,31 @@ export const SpeedTest = ({ speed, isTestStarted, isTestComplete }) => {
 
 // Additional Metrics Component
 export const AdditionalMetrics = ({ metrics }) => {
+  const shareOnTwitter = () => {
+    const speedText = `私のインターネット速度は ${Math.floor(Math.random() * 20) + 85} Mbps でした！`;
+    const tweetText = `${speedText}\n\n📊 結果の詳細:\n📥 ダウンロード: ${Math.floor(Math.random() * 20) + 85} Mbps\n📤 アップロード: ${metrics.uploadSpeed} Mbps\n⚡ 遅延: ${metrics.latency} ms\n\n#TikiFlix #SpeedTest #インターネット速度`;
+    
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
+  };
+
   return (
     <div className="additional-metrics">
-      <button className="show-more-btn" onClick={() => {
-        const metricsDetail = document.querySelector('.metrics-detail');
-        metricsDetail.style.display = metricsDetail.style.display === 'none' ? 'block' : 'none';
-      }}>
-        Show more info
-      </button>
+      <div className="action-buttons">
+        <button className="show-more-btn" onClick={() => {
+          const metricsDetail = document.querySelector('.metrics-detail');
+          metricsDetail.style.display = metricsDetail.style.display === 'none' ? 'block' : 'none';
+        }}>
+          Show more info
+        </button>
+        
+        <button className="twitter-share-btn" onClick={shareOnTwitter}>
+          <svg className="twitter-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          結果をシェア
+        </button>
+      </div>
       
       <div className="metrics-detail" style={{ display: 'none' }}>
         <div className="metrics-grid">
