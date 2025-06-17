@@ -270,8 +270,8 @@ body {
     padding: 80px 15px 60px;
   }
   
-  .netflix-logo {
-    width: 80px;
+  .tikiflix-logo h1 {
+    font-size: 24px;
   }
   
   .metrics-grid {
