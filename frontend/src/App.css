@@ -37,19 +37,25 @@ body {
   padding: 0 20px;
 }
 
-.netflix-logo {
-  width: 100px;
-  height: auto;
+/* TikiFlix logo styles */
+.tikiflix-logo {
+  display: flex;
+  align-items: center;
 }
 
-.netflix-logo-svg {
-  width: 100%;
-  height: auto;
-  transition: transform 0.3s ease;
+.tikiflix-logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e50914;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(229, 9, 20, 0.3);
+  transition: all 0.3s ease;
 }
 
-.netflix-logo-svg:hover {
+.tikiflix-logo h1:hover {
   transform: scale(1.05);
+  text-shadow: 0 4px 8px rgba(229, 9, 20, 0.5);
 }
 
 /* Main content */
