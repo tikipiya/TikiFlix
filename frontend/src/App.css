@@ -153,7 +153,14 @@ body {
   max-width: 600px;
 }
 
-.show-more-btn {
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.show-more-btn, .twitter-share-btn {
   background: transparent;
   border: 2px solid #333333;
   color: #ffffff;
@@ -163,12 +170,32 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .show-more-btn:hover {
   border-color: #e50914;
   background-color: rgba(229, 9, 20, 0.1);
   transform: translateY(-2px);
+}
+
+.twitter-share-btn {
+  border-color: #1DA1F2;
+  color: #1DA1F2;
+}
+
+.twitter-share-btn:hover {
+  border-color: #1DA1F2;
+  background-color: rgba(29, 161, 242, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+.twitter-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .metrics-detail {
