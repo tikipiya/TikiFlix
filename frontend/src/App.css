@@ -313,6 +313,15 @@ body {
   .show-more-btn {
     width: 100%;
   }
+  
+  .twitter-share-btn {
+    width: 100%;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 480px) {
