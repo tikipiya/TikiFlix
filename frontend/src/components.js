@@ -97,20 +97,7 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>
-          <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener noreferrer">
-            Privacy
-          </a>
-          {' '}&middot;{' '}
-          <a href="https://help.netflix.com/legal/termsofuse" target="_blank" rel="noopener noreferrer">
-            Terms
-          </a>
-          {' '}&middot;{' '}
-          <a href="https://help.netflix.com/en/node/134094" target="_blank" rel="noopener noreferrer">
-            Test another device
-          </a>
-        </p>
-        <p className="copyright">© 2025 Netflix Clone</p>
+        <p className="copyright">© 2025 TikiFlix</p>
       </div>
     </footer>
   );
